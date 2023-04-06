@@ -24,6 +24,66 @@
   {{ current_variant.price | money }}
   <label for="Quantity">quantity</label>
   <input type="number" id="Quantity" name="quantity" value="1" min="1">
-  <button type="submit" name="add" id="AddToCart">Add to cart</button>
+  <button name="add" id="AddToCart" class="btn btn-sm btn-success">Add to cart</button>
 </form>
 <div>{{ product.description }}</div>
+
+<script>
+  const btnBaseClass = "btn btn-sm";
+  const addButton = document.querySelector("#AddToCart");
+
+  const addToCart = async () => {
+    const currentVariant = {
+      id: {{ current_variant.id }},
+      quantity: document.querySelector("#Quantity")?.value || 0,
+    };
+    const cartSize = {{ cart.items.size }};
+    const formData = {
+      items: [
+        {
+          quantity: currentVariant.quantity,
+          id: currentVariant.id,
+          properties: {
+            'cart_index': cartSize,
+          }
+        }
+      ]
+    };
+
+    await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then((res) => {
+      window.location.href = "/cart";
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
+
+  if (!!addButton) {
+    {% if current_variant.available %}
+      // If it is avaiable, add hover styles and onClick event.
+      addButton.addEventListener("mouseover", (event) => {
+        addButton.className = `${btnBaseClass} btn-primary`;
+      });
+      addButton.addEventListener("mouseout", (event) => {
+        addButton.className = `${btnBaseClass} btn-success`;
+      });
+
+      addButton.addEventListener("click", async (event) => {
+        // Custom add to cart event.
+        event.preventDefault();
+        addToCart();
+      });
+
+    {% else %}
+      // If it is unavailable, disable.
+      addButton.className = `${btnBaseClass} btn-secondary disabled`;
+    {% endif %}
+  }
+</script>

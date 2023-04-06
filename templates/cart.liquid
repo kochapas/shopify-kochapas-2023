@@ -34,13 +34,48 @@
         {% endfor %}
       </tbody>
     </table>
+
+    <input id="cartNoteCheckbox" type="checkbox" class="btn-check" autocomplete="off">
+    <label id="cartNoteBtn" class="btn btn-outline-primary" for="cartNoteCheckbox">{{ "general.cart.addNote" | t }}</label>
+    <div id="cartNoteContainer" class="d-none">
+      <textarea name="note" id="CartNote">{{ cart.note }}</textarea>
+    </div>
     <div>
       <p>sub total : {{ cart.total_price | money }}</p>
-      <button type="submit" name="update">Update</button>
-      <button type="submit" name="checkout">Checkout</button>
+      <button type="submit" name="update" class="btn btn-light">Update</button>
+      <button type="submit" name="checkout" class="btn btn-info">Checkout</button>
     </div>
   </form>
 {% else %}
   <h2>cart</h2>
   Cart is empty
 {% endif %}
+
+<script>
+  // For debugging the item's properties.
+  console.log({{ cart.items | json }});
+
+  let backupNote = "";
+  const cartNote = document.querySelector("#CartNote");
+  const cartNoteBtn = document.querySelector("#cartNoteBtn");
+  const cartNoteCheckbox = document.querySelector("#cartNoteCheckbox");
+  const cartNoteContainer = document.querySelector("#cartNoteContainer");
+  // Double check the elements in case someone modified the element's id without changing the script.
+  if (cartNote && cartNoteBtn && cartNoteCheckbox && cartNoteContainer) {
+    cartNoteCheckbox.addEventListener("click", (event) => {
+      const checked = event?.target?.checked;
+      if (checked) {
+        // Restore user's input note.
+        cartNote.value = backupNote;
+        cartNoteContainer.className = "";
+        cartNoteBtn.innerText = `{{ "general.cart.removeNote" | t }}`;
+      } else {
+        // Backup user's input note before erase it out of the form.
+        backupNote = cartNote.value;
+        cartNote.value = "";
+        cartNoteContainer.className = "d-none";
+        cartNoteBtn.innerText = `{{ "general.cart.addNote" | t }}`;
+      }
+    });
+  }
+</script>
