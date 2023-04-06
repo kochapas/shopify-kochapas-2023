@@ -34,8 +34,12 @@
         {% endfor %}
       </tbody>
     </table>
-    <label for="CartNote">Add instructions</label>
-    <textarea name="note" id="CartNote">{{ cart.note }}</textarea>
+
+    <input type="checkbox" class="btn-check" id="cartNoteCheckbox" autocomplete="off">
+    <label class="btn btn-outline-primary" for="cartNoteCheckbox">Add instructions</label>
+    <div id="cartNoteContainer" class="d-none">
+      <textarea name="note" id="CartNote">{{ cart.note }}</textarea>
+    </div>
     <div>
       <p>sub total : {{ cart.total_price | money }}</p>
       <button type="submit" name="update">Update</button>
@@ -48,7 +52,26 @@
 {% endif %}
 
 <script>
-  {% for item in cart.items %}
-    console.log({{ item | json }});
-  {% endfor %}
+  // For debugging the item's properties.
+  console.log({{ cart.items | json }});
+
+  let backupNote = "";
+  const cartNote = document.querySelector("#CartNote");
+  const cartNoteCheckbox = document.querySelector("#cartNoteCheckbox");
+  const cartNoteContainer = document.querySelector("#cartNoteContainer");
+  if (cartNoteCheckbox && cartNoteContainer) {
+    cartNoteCheckbox.addEventListener("click", (event) => {
+      const checked = event?.target?.checked;
+      if (checked) {
+        // Restore user's input note.
+        cartNote.value = backupNote;
+        cartNoteContainer.className = "";
+      } else {
+        // Backup user's input note before erase it out of the form.
+        backupNote = cartNote.value;
+        cartNote.value = "";
+        cartNoteContainer.className = "d-none";
+      }
+    });
+  }
 </script>
