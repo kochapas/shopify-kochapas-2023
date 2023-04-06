@@ -24,6 +24,24 @@
   {{ current_variant.price | money }}
   <label for="Quantity">quantity</label>
   <input type="number" id="Quantity" name="quantity" value="1" min="1">
-  <button type="submit" name="add" id="AddToCart">Add to cart</button>
+  <button name="add" id="AddToCart" class="btn btn-sm btn-success">Add to cart</button>
 </form>
 <div>{{ product.description }}</div>
+
+<script>
+  const btnBaseClass = "btn btn-sm";
+  const addButton = document.querySelector("#AddToCart");
+
+  if (!!addButton) {
+    {% if current_variant.available %}
+      addButton.addEventListener("mouseover", (event) => {
+        addButton.className = `${btnBaseClass} btn-primary`;
+      });
+      addButton.addEventListener("mouseout", (event) => {
+        addButton.className = `${btnBaseClass} btn-success`;
+      });
+    {% else %}
+      addButton.className = `${btnBaseClass} btn-secondary disabled`;
+    {% endif %}
+  }
+</script>
