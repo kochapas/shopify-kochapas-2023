@@ -35,8 +35,8 @@
       </tbody>
     </table>
 
-    <input type="checkbox" class="btn-check" id="cartNoteCheckbox" autocomplete="off">
-    <label class="btn btn-outline-primary" for="cartNoteCheckbox">Add instructions</label>
+    <input id="cartNoteCheckbox" type="checkbox" class="btn-check" autocomplete="off">
+    <label id="cartNoteBtn" class="btn btn-outline-primary" for="cartNoteCheckbox">{{ "general.cart.addNote" | t }}</label>
     <div id="cartNoteContainer" class="d-none">
       <textarea name="note" id="CartNote">{{ cart.note }}</textarea>
     </div>
@@ -57,20 +57,24 @@
 
   let backupNote = "";
   const cartNote = document.querySelector("#CartNote");
+  const cartNoteBtn = document.querySelector("#cartNoteBtn");
   const cartNoteCheckbox = document.querySelector("#cartNoteCheckbox");
   const cartNoteContainer = document.querySelector("#cartNoteContainer");
-  if (cartNoteCheckbox && cartNoteContainer) {
+  // Double check the elements in case someone modified the element's id without changing the script.
+  if (cartNote && cartNoteBtn && cartNoteCheckbox && cartNoteContainer) {
     cartNoteCheckbox.addEventListener("click", (event) => {
       const checked = event?.target?.checked;
       if (checked) {
         // Restore user's input note.
         cartNote.value = backupNote;
         cartNoteContainer.className = "";
+        cartNoteBtn.innerText = `{{ "general.cart.removeNote" | t }}`;
       } else {
         // Backup user's input note before erase it out of the form.
         backupNote = cartNote.value;
         cartNote.value = "";
         cartNoteContainer.className = "d-none";
+        cartNoteBtn.innerText = `{{ "general.cart.addNote" | t }}`;
       }
     });
   }
