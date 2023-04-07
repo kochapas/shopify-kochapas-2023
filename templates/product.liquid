@@ -38,6 +38,9 @@
       </div>
       <div class="modal-body">
         <p>We have <span id="productQty">-</span> left for <u>{{product.title}}</u> in our stock!</p>
+        <div class="w-100 border-bottom border-secondary mb-3"></div>
+        <p>Your cart</p>
+        {% render 'cart-preview' %}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
