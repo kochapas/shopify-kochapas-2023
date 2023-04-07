@@ -1,0 +1,42 @@
+{
+  "sections": {
+    "95a573c1-8118-4849-8ed9-f8d3e1dc64bb": {
+      "type": "news-carousel",
+      "blocks": {
+        "123c65b0-6b61-4cc6-ac20-334210e83761": {
+          "type": "news",
+          "settings": {
+            "title": "Good News!",
+            "description": "We open our physical store next month!",
+            "featured": false
+          }
+        },
+        "83ef9f95-a230-4881-be13-a6bd9321bf7a": {
+          "type": "newProduct",
+          "settings": {
+            "title": "Twin Parrots",
+            "description": "We just got a pair of parrot in our stock recently.",
+            "featured": true
+          }
+        },
+        "6c5863fa-d95f-48df-a28f-4e9af2c8a699": {
+          "type": "campaign",
+          "settings": {
+            "title": "BOGO",
+            "description": "All birds need a companion. So you have to take two or take none.",
+            "featured": false
+          }
+        }
+      },
+      "block_order": [
+        "123c65b0-6b61-4cc6-ac20-334210e83761",
+        "83ef9f95-a230-4881-be13-a6bd9321bf7a",
+        "6c5863fa-d95f-48df-a28f-4e9af2c8a699"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "95a573c1-8118-4849-8ed9-f8d3e1dc64bb"
+  ]
+}
