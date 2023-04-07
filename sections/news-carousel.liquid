@@ -1,0 +1,85 @@
+<h1>This is the news carousel sections !!!</h1>
+
+{% schema %}
+  {
+    "name": "News Carousel",
+    "class": "section",
+    "settings": [],
+    "blocks": [
+      {
+        "name": "Campaign",
+        "type": "campaign",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description"
+          },
+          {
+            "type": "checkbox",
+            "id": "featured",
+            "label": "Featured"
+          }
+        ]
+      },
+      {
+        "name": "New Product",
+        "type": "newProduct",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description"
+          },
+          {
+            "type": "checkbox",
+            "id": "featured",
+            "label": "Featured"
+          }
+        ]
+      },
+      {
+        "name": "News",
+        "type": "news",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description"
+          },
+          {
+            "type": "checkbox",
+            "id": "featured",
+            "label": "Featured"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "News Carousel"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
