@@ -28,6 +28,27 @@
 </form>
 <div>{{ product.description }}</div>
 
+<!-- Modal -->
+<div class="modal fade" id="productModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productModalLabel">Welcome</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>We have <span id="productQty">-</span> left for <u>{{product.title}}</u> in our stock!</p>
+        <div class="w-100 border-bottom border-secondary mb-3"></div>
+        <p>Your cart</p>
+        {% render 'cart-preview' %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   const btnBaseClass = "btn btn-sm";
   const addButton = document.querySelector("#AddToCart");
@@ -86,4 +107,20 @@
       addButton.className = `${btnBaseClass} btn-secondary disabled`;
     {% endif %}
   }
+
+  // Calculate total quantity amoung every variants.
+  let qty = 0;
+  {% for variant in product.variants %}
+    qty += {{ variant.inventory_quantity }} || 0;
+  {% endfor %}
+  // Update visual quantity.
+  const productQty = document.querySelector("#productQty");
+  console.log({productQty});
+  if (!!productQty) {
+    productQty.innerText = qty.toString();
+    productQty.className = qty > 0 ? "text-success" : "text-danger";
+  }
+  // Show modal automatically without the user's consent.
+  var myModal = new bootstrap.Modal(document.getElementById('productModal'), {});
+  myModal?.show();
 </script>
